@@ -80,6 +80,9 @@ export const LoginApi = (data: ReqLogin): Res<null> =>
 export const RegisterApi = (data: ReqRegister): Res<null> =>
     instance.post('/api/register', data);
 
+export const AddBook = (data: NewBookForm ):Res<null> =>
+    instance.post('/api/addabook', data);
+
 //登出 api
 export const LogoutApi = (): Res<null> =>
     instance.get('/api/logout');
@@ -99,10 +102,9 @@ export const GetBookInfoByPageNum = (params: { pageNumber: number }): Res<null> 
     instance.get(`/api/books/list/${params.pageNumber}`, {params});
 
 export const GetCategories = (): Res<null> =>
-    instance.post('/api/findbook/categories');
+    instance.get('/api/findbook/categories');
 
-export const AddBook = (data: NewBookForm):Res<null> =>
-    instance.post('/api/addabook');
+
 
 
 // //以下是模板:

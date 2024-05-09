@@ -9,7 +9,7 @@
       :size="formSize"
       status-icon
     >
-        <el-form-item label="书名" prop="name">
+        <el-form-item label="新书书名" prop="name">
             <el-input v-model="newbookForm.title" />
         </el-form-item>
         <el-form-item label="出版年份" prop="version">
@@ -55,7 +55,6 @@ interface RuleForm {
 const ruleFormRef = ref<FormInstance>()
 const formSize = ref<ComponentSize>('default')
 
-let categories = ref<string[]>([]);
 const router = useRouter()
 
 interface Option {
@@ -106,7 +105,7 @@ const newbookForm = reactive<RuleForm>({
     ],
     category: [
         {
-        required: true,
+        required: false,
         message: '分类',
         trigger: 'change',
         },
@@ -115,16 +114,16 @@ const newbookForm = reactive<RuleForm>({
 
 
   const submitForm = (formEl: FormInstance | undefined) => {
-    if (!formEl) return
-    formEl.validate(async (valid) => {
-    if (valid) {
-        let res = await AddBook({
+    if (!formEl) return //参数检查
+    formEl.validate(async (valid) => { //表单验证
+    if (valid) { //验证通过
+        let resp = await AddBook({
             title: newbookForm.title,
             version: newbookForm.version,
             author: newbookForm.author,
             category: newbookForm.category,
       })
-      if (res.success) {
+      if (resp.success) {
         ElMessage.success('新书添加成功')
         await router.push('/index/booklist');
       } else {
