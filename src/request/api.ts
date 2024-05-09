@@ -44,6 +44,7 @@ interface ItypeAPI<T> {
     books: Book[]
     total_books: number
     total_pages: number
+    category_list: Category[];
 }
 
 interface User {
@@ -63,8 +64,8 @@ interface Book {
     borrowedCnt: number
     version: number
   }
-interface CategoryData {
-    categories: string[]; // 'categories' field will contain an array of strings
+  interface Category{
+    whatstring: string
   }
 
 //测试hello api
@@ -97,8 +98,8 @@ export const AddUser = (): Res<null> =>
 export const GetBookInfoByPageNum = (params: { pageNumber: number }): Res<null> =>
     instance.get(`/api/books/list/${params.pageNumber}`, {params});
 
-export const GetCategories = (): Res<CategoryData> =>
-    instance.get('/api/findbook/categories');
+export const GetCategories = (): Res<null> =>
+    instance.post('/api/findbook/categories');
 
 export const AddBook = (data: NewBookForm):Res<null> =>
     instance.post('/api/addabook');

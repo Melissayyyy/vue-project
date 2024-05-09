@@ -32,7 +32,7 @@ let total = ref(100);
 onBeforeMount(async () => {
   let res = await GetBookInfoByPageNum({
     pageNumber: 1
-})
+  })
   res.books.forEach(item => {
     if (!item.bid) {
         console.error("Item in 'books' array is missing 'bid' field", item);

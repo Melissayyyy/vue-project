@@ -37,7 +37,7 @@
 
 
 <script lang="ts" setup>
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, onBeforeMount } from 'vue'
 import type { ComponentSize, FormInstance, FormRules } from 'element-plus'
 import {useRouter} from 'vue-router'
 import {ElMessage} from 'element-plus'
@@ -64,19 +64,27 @@ interface Option {
 }
 let options = ref<Option[]>([]); //不是响应式的就没办法更新！
 
-onMounted(async () => {
+onBeforeMount(async () => {    
   try {
-    const response = await GetCategories();
-    if (response.success && response.result.categories) {
-      categories.value = response.result.categories;
-      options.value = categories.value.map(category => ({ label: category, value: category })) //及时更新options的值
+    const res = await GetCategories();
+    if (res.category_list) {
+      res.category_list.forEach(item => {
+        if (item.whatstring) { // Only push if whatstring is not empty
+          options.value.push({
+            label: item.whatstring,
+            value: item.whatstring
+          });
+        }
+      });
+      console.log('categories:', options.value);
     } else {
-      console.error('Failed to fetch categories: ', response.message);
+      console.error('Failed to fetch categories or no categories available.');
     }
   } catch (error) {
-    console.error('Error fetching categories: ', error);
+    console.error('Error fetching categories:', error);
   }
 });
+
 
 
 const newbookForm = reactive<RuleForm>({
