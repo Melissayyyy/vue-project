@@ -55,7 +55,6 @@ const submitForm = (formEl: FormInstance | undefined) => {
         ElMessage.success('登陆成功')        
         userStore.userName=ruleForm.userName
         await router.push({ name: 'Index', params: { userName: ruleForm.userName } });
-
       } else {
         ElMessage.error('登陆失败，请重新输入用户名和密码')
       }

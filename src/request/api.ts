@@ -49,9 +49,10 @@ interface ItypeAPI<T> {
 
 interface User {
     is_active: boolean,
+    id: number,
     username: string,
+    role: string,
     email: string,
-    is_superuser: boolean,
     first_name: string,
     last_name: string
 }
@@ -64,9 +65,9 @@ interface Book {
     borrowedCnt: number
     version: number
   }
-  interface Category{
+interface Category{
     whatstring: string
-  }
+}
 
 //测试hello api
 export const TestHello = (): Res<null> =>

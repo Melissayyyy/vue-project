@@ -21,12 +21,12 @@ const submitForm = (formEl: FormInstance | undefined) => {
     formEl.validate(async (valid) => {
     if (valid) {
         let res = await RegisterApi({
-        username: registerForm.userName,
-        password: registerForm.password,
-        first_name: registerForm.first_name,
-        last_name: registerForm.last_name,
-        email: registerForm.email
-      })
+          username: registerForm.userName,
+          password: registerForm.password,
+          first_name: registerForm.first_name,
+          last_name: registerForm.last_name,
+          email: registerForm.email
+        })
       if (res.success) {
         ElMessage.success('注册成功')
         await router.push('/');
