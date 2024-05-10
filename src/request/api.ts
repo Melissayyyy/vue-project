@@ -66,6 +66,7 @@ interface Book {
     borrowedCnt: number
     version: number
     time: number  //入库年份
+    is_active: boolean
   }
 interface Category{
     whatstring: string
@@ -109,8 +110,8 @@ export const GetBookInfoByPageNum = (params: { pageNumber: number }): Res<null> 
 export const GetCategories = (): Res<null> =>
     instance.get('/api/findbook/categories');
 
-// export const discardBookById = (params: { bookID: number }):Res<null> =>
-//     instance.post('api/discard_book/${params.bookID}',{params});
+export const DiscardBookById = (params: { bookid: number }): Res<null> =>
+    instance.get(`/api/delete/books/${params.bookid}`, {params});
 
 
 // //以下是模板:

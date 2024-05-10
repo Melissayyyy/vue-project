@@ -6,7 +6,7 @@ const handleClick = () => {
 import { ref, computed, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import {Search, RefreshRight} from '@element-plus/icons-vue'
-import {GetBookInfoByPageNum} from "@/request/api";
+import {GetBookInfoByPageNum, DiscardBookById} from "@/request/api";
 import {ElDialog, ElButton} from 'element-plus'
 
 interface Book {
@@ -140,9 +140,17 @@ const filteredBooks = computed(() => {
 function clearInput(){
     input.value = '';
 }
-function EditInfo(){
+const EditInfo = (book: Book) => {
+  console.log('EditInfo called', book);
+  currentBook.value = book; // 设置当前书籍数据
+  //dialogVisible.value = true; // 显示对话框
+    let delres = DiscardBookById({
+      bookid: currentBook.value.bid
+    })
+    console.log('Delete Finished');
+    fetchData(); //再次fetchData即可做到实时更新
 
-}
+};
 
 </script>
 
@@ -175,8 +183,8 @@ function EditInfo(){
             <el-button link type="primary" size="small" @click="DetailInfo(scope.row)">
               Detail
             </el-button>
-            <el-button link type="primary" size="small" @click="EditInfo()">
-              Edit
+            <el-button link type="primary" size="small" @click="EditInfo(scope.row)">
+              Delete
             </el-button>
             
 
