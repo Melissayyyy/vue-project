@@ -1,40 +1,40 @@
 <template>
-    <el-form
-      ref="ruleFormRef"
-      style="max-width: 600px"
-      :model="newbookForm"
-      :rules="rules"
-      label-width="auto"
-      class="demo-ruleForm"
-      :size="formSize"
-      status-icon
-    >
-        <el-form-item label="新书书名" prop="name">
-            <el-input v-model="newbookForm.title" />
-        </el-form-item>
-        <el-form-item label="出版年份" prop="version">
-            <el-input v-model="newbookForm.version" />
-        </el-form-item>
-        <el-form-item label="作者" prop="author">
-            <el-input v-model="newbookForm.author" />
-        </el-form-item>
-        <el-form-item label="分类" prop="category">
-        <el-select-v2
-          v-model="newbookForm.category"
-          :options="options"
-        />
-      </el-form-item>
-
-      
-      <el-form-item>
-        <el-button type="primary" @click="submitForm(ruleFormRef)">
-          Create
-        </el-button>
-        <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
-      </el-form-item>
-    </el-form>
-  </template>
-
+  <el-form
+    ref="ruleFormRef"
+    style="max-width: 600px"
+    :model="newbookForm"
+    :rules="rules"
+    label-width="auto"
+    class="demo-ruleForm"
+    :size="formSize"
+    status-icon
+  >
+    <el-form-item label="书名" prop="title">
+      <el-input v-model="newbookForm.title" />
+    </el-form-item>
+    <el-form-item label="出版年份" prop="version">
+      <el-input v-model="newbookForm.version" />
+    </el-form-item>
+    <el-form-item label="作者" prop="author">
+      <el-input v-model="newbookForm.author" />
+    </el-form-item>
+    <el-form-item label="分类" prop="category">
+      <el-select-v2
+        v-model="newbookForm.category"
+        :options="options"
+      />
+    </el-form-item>
+    <el-form-item label="入库年份" prop="time">
+      <el-input v-model="newbookForm.time" />
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="submitForm(ruleFormRef)">
+        Create
+      </el-button>
+      <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
+    </el-form-item>
+  </el-form>
+</template>
 
 <script lang="ts" setup>
 import { reactive, ref, onBeforeMount } from 'vue'
@@ -50,11 +50,11 @@ interface RuleForm {
     version: number,
     author: string,
     category: string,
+    time: number, //入库年份
 }
 
 const ruleFormRef = ref<FormInstance>()
 const formSize = ref<ComponentSize>('default')
-
 const router = useRouter()
 
 interface Option {
@@ -91,18 +91,13 @@ const newbookForm = reactive<RuleForm>({
     version: 2999,
     author: '',
     category: '',
+    time: new Date().getFullYear(), // 初始化为当前年份
   })
 
   const rules = reactive<FormRules<RuleForm>>({
-    title: [
-    { required: true, message: '新书书名', trigger: 'blur' },
-    ],
-    version: [
-    { required: true, message: '出版年份', trigger: 'blur' },
-    ],
-    author: [
-    { required: true, message: '作家', trigger: 'blur' },
-    ],
+    title: [{ required: true, message: '新书书名', trigger: 'blur' }],
+    version: [{ required: true, message: '出版年份', trigger: 'blur' }],
+    author: [{ required: true, message: '作家', trigger: 'blur' }],
     category: [
         {
         required: false,
@@ -110,6 +105,7 @@ const newbookForm = reactive<RuleForm>({
         trigger: 'change',
         },
     ],
+    time: [{ required: true, message: '入库年份', trigger: 'blur' }],
   })
 
 
@@ -122,6 +118,7 @@ const newbookForm = reactive<RuleForm>({
             version: newbookForm.version,
             author: newbookForm.author,
             category: newbookForm.category,
+            time: newbookForm.time,
       })
       if (resp.success) {
         ElMessage.success('新书添加成功')
@@ -141,5 +138,5 @@ const resetForm = (formEl: FormInstance | undefined) => {
     formEl.resetFields()
   }
 </script>
-  
+
 

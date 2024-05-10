@@ -12,7 +12,7 @@ interface ReqRegister { //注册用户的表单
     password: string
     first_name: string,
     last_name: string,
-    email: string
+    email: string,
 }
 
 interface ReqStatus {
@@ -25,6 +25,7 @@ interface NewBookForm{ //新录入的书的表单信息
     version: number,
     author: string,
     category: string,
+    time: number,
 }
 
 // Res是返回的参数，T是泛型，需要自己定义，返回对数统一管理***
@@ -64,6 +65,7 @@ interface Book {
     status: number
     borrowedCnt: number
     version: number
+    time: number  //入库年份
   }
 interface Category{
     whatstring: string
@@ -84,28 +86,31 @@ export const RegisterApi = (data: ReqRegister): Res<null> =>
 export const AddBook = (data: NewBookForm ):Res<null> =>
     instance.post('/api/addabook', data);
 
+
+
 //登出 api
 export const LogoutApi = (): Res<null> =>
     instance.get('/api/logout');
 
 //根据username查询用户信息api  get
 export const GetUserInfoByUserName = (params: { userName: string }): Res<null> =>
-    instance.get(`/api/find/${params.userName}`, {params});
+    instance.get('/api/find/${params.userName}', {params});
 
 //根据pageNumber查询用户信息api  get
 export const GetUserInfoByPageNum = (params: { pageNumber: number }): Res<null> =>
-    instance.get(`/api/users/list/${params.pageNumber}`, {params});
+    instance.get('/api/users/list/${params.pageNumber}', {params});
 
 export const AddUser = (): Res<null> =>
-    instance.post("/api/adduser");
+    instance.post('/api/adduser');
 
 export const GetBookInfoByPageNum = (params: { pageNumber: number }): Res<null> =>
-    instance.get(`/api/books/list/${params.pageNumber}`, {params});
+    instance.get('/api/books/list/${params.pageNumber}', {params});
 
 export const GetCategories = (): Res<null> =>
     instance.get('/api/findbook/categories');
 
-
+export const discardBookById = (params: { bookID: number }):Res<null> =>
+    instance.post('api/discard_book/${params.bookID}',{params});
 
 
 // //以下是模板:
