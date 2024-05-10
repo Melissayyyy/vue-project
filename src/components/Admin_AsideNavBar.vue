@@ -10,9 +10,9 @@ const router = useRouter()
 function change(key: string, keyPath: string[]) {
   console.log(key)
 }
-function jumpToAddUser() {
-  router.push('/addUser')
-}
+// function jumpToAddUser() {
+//   router.push('/addUser')
+// }
 
 
 </script>
@@ -23,19 +23,25 @@ function jumpToAddUser() {
       class="el-menu-vertical-demo"
       :router=true
   >
-    <el-menu-item index="/index/booklist">
+    <el-menu-item index="/admin/booklist">
       <el-icon>
         <icon-menu/>
       </el-icon>
       <span>查看图书信息</span>
     </el-menu-item>
-    <el-menu-item index="/index/checkUserInfo">
+    <el-menu-item index="/admin/checkUserInfo">
+      <el-icon>
+        <document/>
+      </el-icon>
+      <span>查看学生信息</span>
+    </el-menu-item>
+    <el-menu-item index="/admin/checkBorrowInfo">
       <el-icon>
         <document/>
       </el-icon>
       <span>查看借阅信息</span>
     </el-menu-item>
-    <el-menu-item index="/index/bookManagement">
+    <el-menu-item index="/admin/bookManagement">
       <el-icon>
         <setting/>
       </el-icon>

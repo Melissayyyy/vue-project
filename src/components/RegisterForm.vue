@@ -9,6 +9,7 @@ const router = useRouter()
 const ruleFormRef = ref<FormInstance>()
 
 const registerForm = reactive({
+  studentno: '',
   userName: '',
   password: '',
   first_name:'',
@@ -16,25 +17,47 @@ const registerForm = reactive({
   email:'',
 })
 
+const validateEmail = (rule: any, value: any, callback: any) => {
+  const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+  if (emailRegex.test(value)) {
+    return true;
+  } else {
+    callback(new Error('请输入有效的邮箱地址'));
+  }
+};
+const rules = reactive({
+  studentno: [{required:true, message: '请输入学号', trigger: 'blur'}],
+  userName: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+  first_name: [{ required: true, message: '请输入名字', trigger: 'blur' }],
+  last_name: [{ required: true, message: '请输入姓氏', trigger: 'blur' }],
+  email: [
+    { required: true, message: '请输入邮箱', trigger: 'blur' },
+    { validator: validateEmail, trigger: 'blur' }
+  ],
+});
+
+
 const submitForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
     formEl.validate(async (valid) => {
     if (valid) {
-        let res = await RegisterApi({
-          username: registerForm.userName,
-          password: registerForm.password,
-          first_name: registerForm.first_name,
-          last_name: registerForm.last_name,
-          email: registerForm.email
-        })
+      let res = await RegisterApi({
+        studentno: registerForm.studentno,
+        username: registerForm.userName,
+        password: registerForm.password,
+        first_name: registerForm.first_name,
+        last_name: registerForm.last_name,
+        email: registerForm.email
+      })
       if (res.success) {
         ElMessage.success('注册成功')
         await router.push('/');
       } else {
-        ElMessage.error('注册失败请重新输入')
+        ElMessage.error('注册失败，请重新输入')
       }
     } else {
-      ElMessage.error('注册失败请重新输入')
+      ElMessage.error('注册失败，请重新输入')
       return false
     }
   })
@@ -50,12 +73,18 @@ function jumpToLogin() {
   <el-form
       ref="ruleFormRef"
       :model="registerForm"
+      :rules="rules"
       style="max-width: 600px"
       label-width="auto"
       class="demo-ruleForm"
   >
 
-    <el-form-item label="用户名" prop="userName">
+    <el-form-item label="学号" prop="studentno">
+      <el-input v-model="registerForm.studentno" type="studentno" autocomplete="off"/>
+    </el-form-item>
+
+
+    <el-form-item label="用户名" prop="userName" >
       <el-input v-model="registerForm.userName" type="text" autocomplete="off"/>
     </el-form-item>
 
@@ -72,7 +101,7 @@ function jumpToLogin() {
     </el-form-item>
 
     <el-form-item label="邮箱" prop="email">
-      <el-input v-model="registerForm.email" type="text" autocomplete="off"/>
+      <el-input v-model="registerForm.email" type="email" autocomplete="off"/>
     </el-form-item>
 
     <el-form-item>
@@ -80,7 +109,7 @@ function jumpToLogin() {
       >注册
       </el-button
       >
-      <el-button type="primary"
+      <el-button type="primary" @click="jumpToLogin"
       >登录
       </el-button
       >
@@ -103,13 +132,13 @@ input[type="password"] {
   box-sizing: border-box; /* 定义尺寸计算方式 */
 }
 button {
-  background-color: #3f3010;
-  color: red;
+  background-color: #357e86 ;
+  color: rgb(255, 255, 255);
   border: blue;
   padding: 10px 20px;
   cursor: pointer;
 }
 button:hover {
-  background-color: #36976b;
+  background-color: rgb(94, 128, 143);
 }
 </style>

@@ -3,10 +3,14 @@ import {onBeforeMount, ref} from "vue";
 import {GetUserInfoByPageNum} from "@/request/api";
 
 interface User {
-  userName: string
-  first_name: string
-  last_name: string
-  email: string
+    id: number,
+    username: string,
+    role: string,
+    email: string,
+    first_name: string,
+    last_name: string,
+    is_active: boolean,
+    studentno: string,
 }
 
 const tableData = ref<User[]>([]);
@@ -22,10 +26,14 @@ onBeforeMount(async () => {
   })
   res.users.forEach(item => {
     tableData.value.push({
-      userName: item.username,
+      id: item.id,
+      username: item.username,
+      role: item.role,
+      email: item.email,
       first_name: item.first_name,
       last_name: item.last_name,
-      email: item.email
+      is_active: item.is_active,
+      studentno: item.studentno
     });
   });
   total.value = res.total_users
@@ -45,10 +53,14 @@ const fetchData = async () => {
   tableData.value=[]
   res.users.forEach(item => {
     tableData.value.push({
-      userName: item.username,
+      id: item.id,
+      username: item.username,
+      role: item.role,
+      email: item.email,
       first_name: item.first_name,
       last_name: item.last_name,
-      email: item.email
+      is_active: item.is_active,
+      studentno: item.studentno
     });
   });
   total.value = res.total_users
@@ -58,27 +70,67 @@ const fetchData = async () => {
 </script>
 
 <template>
-  <el-row>
-    <el-col :span="24">
-      <el-table :data="tableData" stripe style="width: 100%">
-        <el-table-column prop="userName" label="用户名" width="180"/>
-        <el-table-column prop="first_name" label="姓" width="180"/>
-        <el-table-column prop="last_name" label="名" width="180"/>
-        <el-table-column prop="email" label="邮箱"/>
-      </el-table>
-    </el-col>
-  </el-row>
+   <div class="train-main">
+    <div><h1>学生信息</h1></div>
+    
+    <div class="train-container">
+        <el-table
+              :data="tableData"
+              style="width: 100%"
+              class="form-container"
+              
+        > 
+          <el-table-column prop="username" label="用户名" width="150"/>
+          <el-table-column prop="studentno" label="用户学号" width="150"/>
+          <el-table-column prop="first_name" label="姓" width="150"/>
+          <el-table-column prop="last_name" label="名" width="150"/>
+          <el-table-column prop="email" label="邮箱" width="200"/>
+          <el-table-column prop="is_active" label="学生状态" width="150"/>
 
-  <el-pagination
-      @current-change="handleCurrentChange"
-      :current-page="currentPage"
-      :page-size="pageSize"
-      layout="prev, pager, next"
-      :total="total"
-  />
+        </el-table>      
 
+    <el-pagination
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-size="pageSize"
+        layout="prev, pager, next"
+        :total="total"
+    />
+    </div>
+  </div>
 </template>
 
 <style scoped>
-
+.train-main {
+    display: flex;    
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+    width: 100%;
+}
+.train-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    block-size: auto;
+}
+.inside-button{
+    width: 5px;
+    margin: 0;
+}
+.inputbox{
+  display: flex;
+  width:100%;
+}
+.form-container{
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+    overflow: auto; /* 如果内容超出，显示滚动条 */
+    width: 100%;
+    table-layout: fixed; /* 表格列宽均匀分布 */
+  }
 </style>

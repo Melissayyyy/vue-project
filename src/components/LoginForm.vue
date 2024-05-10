@@ -11,14 +11,14 @@ const router = useRouter()
 const ruleFormRef = ref<FormInstance>()
 
 const ruleForm = reactive({
-  userName: '',
+  studentno: '',
   password: ''
 })
 
 
 const checkUserName = (rule: any, value: any, callback: any) => {
   if (value === '') {
-    return callback(new Error('请输入用户名'))
+    return callback(new Error('请输入学号'))
   } else {
     callback()
   }
@@ -33,7 +33,7 @@ const checkPassword = (rule: any, value: any, callback: any) => {
 }
 
 const rules = reactive<FormRules<typeof ruleForm>>({
-  userName: [{validator: checkUserName, trigger: 'blur'}],
+  studentno: [{validator: checkUserName, trigger: 'blur'}],
   password: [{validator: checkPassword, trigger: 'blur'}],
 })
 
@@ -48,13 +48,13 @@ const submitForm = (formEl: FormInstance | undefined) => {
       console.log('表单验证通过，可以提交')
       // console.log(res)
       let res = await LoginApi({
-        username: ruleForm.userName,
+        studentno: ruleForm.studentno,
         password: ruleForm.password
       })
       if (res.success) {
         ElMessage.success('登陆成功')        
-        userStore.userName=ruleForm.userName
-        await router.push({ name: 'Index', params: { userName: ruleForm.userName } });
+        userStore.userName=ruleForm.studentno
+        await router.push({ name: 'Index', params: { userName: ruleForm.studentno } });
       } else {
         ElMessage.error('登陆失败，请重新输入用户名和密码')
       }
@@ -84,8 +84,8 @@ function jumpToRegister() {
       class="demo-ruleForm"
   >
 
-    <el-form-item label="用户名" prop="userName">
-      <el-input v-model="ruleForm.userName" type="text" autocomplete="off"/>
+    <el-form-item label="学号" prop="studentno">
+      <el-input v-model="ruleForm.studentno" type="text" autocomplete="off"/>
     </el-form-item>
 
     <el-form-item label="密码" prop="password">

@@ -3,13 +3,14 @@ import instance from "@/request/http";
 //一般情况下，接口类型会放到一个文件
 // 下面两个TS接口，表示要传的参数
 interface ReqLogin {
-    username: string
+    studentno: string
     password: string
 }
 
 interface ReqRegister { //注册用户的表单
     username: string
     password: string
+    studentno: string
     first_name: string,
     last_name: string,
     email: string,
@@ -49,13 +50,14 @@ interface ItypeAPI<T> {
 }
 
 interface User {
-    is_active: boolean,
     id: number,
     username: string,
     role: string,
     email: string,
     first_name: string,
-    last_name: string
+    last_name: string,
+    is_active: boolean,
+    studentno: string,
 }
 interface Book {
     bid: number

@@ -1,35 +1,62 @@
 import {createRouter, createWebHistory} from "vue-router";
 
-import Login from '@/pages/Login.vue';
-import Index from "@/pages/Index.vue";
-import Test from "@/pages/Test.vue";
+import LoginUser from '@/pages/Login.vue';
+import RegisterUser from "@/pages/Register.vue";
+import LoginAdmin from '@/pages/Login.vue';
+import RegisterAdmin from "@/pages/Register.vue";
+
 import Booklist from "@/components/Booklist.vue";
+
 import CheckUserInfo from "@/components/CheckUserInfo.vue";
 import BookManagement from "@/components/BookManagement.vue";
-import Register from "@/pages/Register.vue";
-import IndexMain from "@/components/IndexMain.vue";
+import CheckMyBorrowInfo from "@/components/CheckMyBorrowInfo.vue";
 import AddBook from "@/pages/AddBook.vue";
 
 const routes =
     [
         {
             path: '/',
-            name: 'Login',
-            component: Login
+            name: 'UserLogin',
+            component: LoginUser,
         },
         {
-            path: '/register',
+            path: '/userregister',
             name: 'Register',
-            component: Register
+            component: RegisterUser
         },
         {
-            path: '/index',
-            name: 'Index',
-            component: Index,
+            path: '/adminlogin',
+            name: 'Admin',
+            component: LoginAdmin,
+        },        
+        {
+            path: '/adminregister',
+            name: 'Register',
+            component: RegisterAdmin
+        },
+
+        {
+            path: '/user',
+            component: () => import('@/pages/IndexUser.vue'),
             children: [
                 {
                     path: 'booklist',
-                    name: 'Booklist',
+                    component: Booklist,
+                    
+                },
+                {
+                    path: 'checkMyBorrowInfo',
+                    name: 'CheckMyBorrowInfo',
+                    component: CheckMyBorrowInfo,
+                },
+            ]
+        },
+        {
+            path: '/admin',
+            component: () => import('@/pages/IndexAdmin.vue'),
+            children: [
+                {
+                    path: 'booklist',
                     component: Booklist,
                 },
                 {
@@ -40,25 +67,15 @@ const routes =
                     path: 'bookManagement',
                     component: BookManagement,
                 },
+                {
+                    path: '/newBook',
+                    name: 'NewBook',
+                    component: AddBook
+                },
             ]
-
-        },
-        {
-            path: '/indexMain',
-            name: 'IndexMain',
-            component: IndexMain
-        },
-        {
-            path: '/newBook',
-            name: 'NewBook',
-            component: AddBook
-        },
-        {
-            path: '/test',
-            name: 'Test',
-            component: Test
         }
     ];
+
 
 const router = createRouter({
     history: createWebHistory(),

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import AsideNavBar from "@/components/AsideNavBar.vue";
+import AsideNavBar from "@/components/User_AsideNavBar.vue";
 import Header from "@/components/Header.vue";
 import { RouterView } from "vue-router";
 </script>
