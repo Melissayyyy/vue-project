@@ -14,7 +14,8 @@ interface Book {
   title: string
   author: string
   category: string
-  status: "在库" | "借出" | "已弃"; // 字符串字面量类型
+  status: "在库" | "出借"; // 字符串字面量类型
+  //status: "在库" | "出借" | "已弃";
   borrowedCnt: number
   version: number
   time: number
@@ -47,13 +48,14 @@ onBeforeMount(async () => {
         return;
       }
     // 根据 status 的值设置一个描述性的文本
-    let bookStatusText = "";
-      if(item.status == 0) 
-        bookStatusText = "在库";
-      else if(item.status == 1)
-        bookStatusText="借出";
-      else if(item.status == 2)
-        bookStatusText = "已弃";   
+    const bookStatusText = (item.status == 0 ? '在库' : '出借'); 
+    // let bookStatusText = "";
+    //   if(item.status == 0) 
+    //     bookStatusText = "在库";
+    //   else if(item.status == 1)
+    //     bookStatusText="借出";
+    //   else if(item.status == 2)
+    //     bookStatusText = "已弃";   
     tableData.value.push({
       bid: item.bid,
       title: item.title,
@@ -89,13 +91,14 @@ const fetchData = async () => {
       return;
     }
     // 根据 status 的值设置一个描述性的文本
-    let bookStatusText = "";
-      if(item.status == 0) 
-        bookStatusText = "在库";
-      else if(item.status == 1)
-        bookStatusText="借出";
-      else if(item.status == 2)
-        bookStatusText = "已弃";       
+    const bookStatusText = (item.status == 0 ? '在库' : '出借'); 
+    // let bookStatusText = "";
+    //   if(item.status == 0) 
+    //     bookStatusText = "在库";
+    //   else if(item.status == 1)
+    //     bookStatusText="借出";
+    //   else if(item.status == 2)
+    //     bookStatusText = "已弃";       
 
     // 将具有描述性状态文本的项目添加到 tableData
     tableData.value.push({
@@ -133,29 +136,12 @@ const filteredBooks = computed(() => {
   });
 });
 
-import { defineAsyncComponent } from 'vue';
-
-// 引入API调用
-import { discardBookById } from "@/request/api"; // 假设你已经创建了这个 API 调用
-
-const discardBook = async (bookId) => {
-  try {
-    const response = await discardBookById({ bookId });
-    if (response.success) {
-      ElMessage.success('Book marked as discarded');
-      fetchData(); // 重新获取数据以更新视图
-    } else {
-      ElMessage.error('Failed to discard the book');
-    }
-  } catch (error) {
-    console.error('Error discarding the book:', error);
-    ElMessage.error('Error discarding the book');
-  }
-};
-
 
 function clearInput(){
     input.value = '';
+}
+function EditInfo(){
+
 }
 
 </script>
@@ -189,7 +175,7 @@ function clearInput(){
             <el-button link type="primary" size="small" @click="DetailInfo(scope.row)">
               Detail
             </el-button>
-            <el-button link type="primary" size="small" @click="EditInfo">
+            <el-button link type="primary" size="small" @click="EditInfo()">
               Edit
             </el-button>
             

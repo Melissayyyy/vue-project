@@ -98,19 +98,19 @@ export const GetUserInfoByUserName = (params: { userName: string }): Res<null> =
 
 //根据pageNumber查询用户信息api  get
 export const GetUserInfoByPageNum = (params: { pageNumber: number }): Res<null> =>
-    instance.get('/api/users/list/${params.pageNumber}', {params});
+    instance.get(`/api/users/list/${params.pageNumber}`, {params});
 
 export const AddUser = (): Res<null> =>
     instance.post('/api/adduser');
 
 export const GetBookInfoByPageNum = (params: { pageNumber: number }): Res<null> =>
-    instance.get('/api/books/list/${params.pageNumber}', {params});
+    instance.get(`/api/books/list/${params.pageNumber}`, {params});
 
 export const GetCategories = (): Res<null> =>
     instance.get('/api/findbook/categories');
 
-export const discardBookById = (params: { bookID: number }):Res<null> =>
-    instance.post('api/discard_book/${params.bookID}',{params});
+// export const discardBookById = (params: { bookID: number }):Res<null> =>
+//     instance.post('api/discard_book/${params.bookID}',{params});
 
 
 // //以下是模板:
