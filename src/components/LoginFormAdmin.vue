@@ -54,7 +54,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
       if (res.success) {
         ElMessage.success('登陆成功')        
         userStore.userName=ruleForm.studentno
-        await router.push({ name: 'user', params: { userName: ruleForm.studentno } });
+        await router.push({ name: 'Index', params: { userName: ruleForm.studentno } });
       } else {
         ElMessage.error('登陆失败，请重新输入用户名和密码')
       }
@@ -69,7 +69,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
 
 
 function jumpToRegister() {
-  router.push('/userregister')
+  router.push('/adminregister')
 }
 
 

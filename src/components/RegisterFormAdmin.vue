@@ -27,7 +27,7 @@ const validateEmail = (rule: any, value: any, callback: any) => {
   }
 };
 const rules = reactive({
-  studentno: [{required:true, message: '请输入学号', trigger: 'blur'}],
+  studentno: [{required:true, message: '请输入工号', trigger: 'blur'}],
   userName: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
   first_name: [{ required: true, message: '请输入名字', trigger: 'blur' }],
@@ -36,7 +36,7 @@ const rules = reactive({
     { required: true, message: '请输入邮箱', trigger: 'blur' },
     { validator: validateEmail, trigger: 'blur' }
   ],
-  role: "student"
+  role: "admin"
 });
 
 
@@ -51,7 +51,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
         first_name: registerForm.first_name,
         last_name: registerForm.last_name,
         email: registerForm.email,
-        role: "student"
+        role: "admin"
       })
       if (res.success) {
         ElMessage.success('注册成功')
@@ -82,7 +82,7 @@ function jumpToLogin() {
       class="demo-ruleForm"
   >
 
-    <el-form-item label="学号" prop="studentno">
+    <el-form-item label="工号" prop="studentno">
       <el-input v-model="registerForm.studentno" type="studentno" autocomplete="off"/>
     </el-form-item>
 

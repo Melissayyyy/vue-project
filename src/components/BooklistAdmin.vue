@@ -164,10 +164,10 @@ const EditInfo = (book: Book) => {
         <el-table-column fixed="right" label="操作" width="120">
           <template #default="scope">
             <el-button link type="primary" size="small" @click="DetailInfo(scope.row)">
-              Detail
+              详情
             </el-button>
             <el-button link type="primary" size="small" @click="EditInfo(scope.row)">
-              Delete
+              下架
             </el-button>
             
 

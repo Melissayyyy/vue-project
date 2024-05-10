@@ -4,7 +4,7 @@ import RegisterForm from "@/components/RegisterForm.vue";
 
 <template>
   <div class="container">
-    <h1>学生登录</h1>
+    <h1>管理员登录</h1>
     <div class="background">
       <RegisterForm class="form-container"></RegisterForm>
 
@@ -29,7 +29,7 @@ import RegisterForm from "@/components/RegisterForm.vue";
 .background {
 
   /* 设置背景颜色为白色，透明度为0.5 */
-  background-color: rgba(103, 186, 239, 0.9);
+  background-color: rgba(122, 84, 7, 0.9);
   /* 其他样式，例如内边距、边框圆角等 */
   padding: 20px;
   border-radius: 8px;

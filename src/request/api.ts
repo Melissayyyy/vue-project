@@ -14,6 +14,7 @@ interface ReqRegister { //注册用户的表单
     first_name: string,
     last_name: string,
     email: string,
+    role: string
 }
 
 interface ReqStatus {
@@ -28,6 +29,12 @@ interface NewBookForm{ //新录入的书的表单信息
     category: string,
     time: number,
 }
+interface BS_form{
+    bid: number
+    databorrow: string
+    datareturn: string
+}
+
 
 // Res是返回的参数，T是泛型，需要自己定义，返回对数统一管理***
 type Res<T> = Promise<ItypeAPI<T>>;
@@ -47,6 +54,7 @@ interface ItypeAPI<T> {
     total_books: number
     total_pages: number
     category_list: Category[];
+    bs: BS;
 }
 
 interface User {
@@ -69,7 +77,15 @@ interface Book {
     version: number
     time: number  //入库年份
     is_active: boolean
-  }
+}
+interface BS{
+    bid: number
+    id: number
+    databorrow: string
+    datareturn: string
+    expired: boolean
+}
+
 interface Category{
     whatstring: string
 }
@@ -97,7 +113,7 @@ export const LogoutApi = (): Res<null> =>
 
 //根据username查询用户信息api  get
 export const GetUserInfoByUserName = (params: { userName: string }): Res<null> =>
-    instance.get('/api/find/${params.userName}', {params});
+    instance.get(`/api/find/${params.userName}`, {params});
 
 //根据pageNumber查询用户信息api  get
 export const GetUserInfoByPageNum = (params: { pageNumber: number }): Res<null> =>
@@ -114,6 +130,9 @@ export const GetCategories = (): Res<null> =>
 
 export const DiscardBookById = (params: { bookid: number }): Res<null> =>
     instance.get(`/api/delete/books/${params.bookid}`, {params});
+
+export const BorrowABook = (data: BS_form): Res<null> =>
+    instance.post('/api/borrowbook', data);
 
 
 // //以下是模板:

@@ -1,12 +1,12 @@
 import {createRouter, createWebHistory} from "vue-router";
 
-import LoginUser from '@/pages/Login.vue';
-import RegisterUser from "@/pages/Register.vue";
-import LoginAdmin from '@/pages/Login.vue';
-import RegisterAdmin from "@/pages/Register.vue";
+import LoginUser from "@/pages/Login.vue";
+import Register from "@/pages/Register.vue";
+import LoginAdmin from "@/pages/LoginAdmin.vue";
+import RegisterAdmin from "@/pages/RegisterAdmin.vue";
 
-import Booklist from "@/components/Booklist.vue";
-
+import Booklist from "@/components/BooklistAdmin.vue";
+import BorrowBook from "@/components/BorrowBook.vue";
 import CheckUserInfo from "@/components/CheckUserInfo.vue";
 import BookManagement from "@/components/BookManagement.vue";
 import CheckMyBorrowInfo from "@/components/CheckMyBorrowInfo.vue";
@@ -22,7 +22,7 @@ const routes =
         {
             path: '/userregister',
             name: 'Register',
-            component: RegisterUser
+            component: () => import('@/pages/Register.vue')
         },
         {
             path: '/adminlogin',
@@ -40,14 +40,13 @@ const routes =
             component: () => import('@/pages/IndexUser.vue'),
             children: [
                 {
-                    path: 'booklist',
-                    component: Booklist,
-                    
-                },
-                {
                     path: 'checkMyBorrowInfo',
                     name: 'CheckMyBorrowInfo',
                     component: CheckMyBorrowInfo,
+                },
+                {
+                    path: 'borrowBook',
+                    component: BorrowBook,                    
                 },
             ]
         },

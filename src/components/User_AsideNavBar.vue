@@ -23,11 +23,12 @@ function change(key: string, keyPath: string[]) {
       class="el-menu-vertical-demo"
       :router=true
   >
-    <el-menu-item index="/user/booklist">
+
+    <el-menu-item index="/user/borrowBook">
       <el-icon>
         <icon-menu/>
       </el-icon>
-      <span>查看图书信息</span>
+      <span>云上借书</span>
     </el-menu-item>
 
     <el-menu-item index="/user/checkMyBorrowInfo">
