@@ -19,62 +19,29 @@ interface MyBorrowResp {
 }
 
 const tableData = ref<MyBorrowResp[]>([]); // 正确的初始化为一个空数组
-//ref 的使用：ref 是用来保持响应式的引用，对于数组和对象应始终初始化为其直接类型（如空数组 [] 或空对象 {}），而不是直接填充一个对象，除非是确切的默认值。
-
-//数据检查：在尝试访问可能未定义的属性之前检查了 res 和 res.myborrowresps 的存在性，这可以防止运行时错误，并提供更清晰的调试信息。
-
-// 确保 res 和 res.myborrowresps 存在
-// onBeforeMount(async () => {
-//   try {
-//     let res = await MyBorrowQuery({ id: userName });
-//     console.log("API response:", res);  // 这将帮助你看到从 API 返回的实际响应
-
-//     // 检查 res 是否存在，res.myborrowresps 是否是数组
-//     if (res && Array.isArray(res.myborrowresps)) {
-//       tableData.value = res.myborrowresps.map(item => ({
-//         id: userName,
-//         databorrow: item.databorrow,
-//         datereturn: item.datereturn,
-//         expired: item.expired,
-//         title: item.title,
-//         author: item.author,
-//         bid: item.bid,
-//         category: item.category,
-//         version: item.version,
-//       }));
-//     } else {
-//       // 提供更具体的错误信息以帮助诊断问题
-//       console.error("Response received but the 'myborrowresps' key is missing or invalid:", res);
-//     }
-//   } catch (error) {
-//     console.error('Error during data fetch:', error);
-//   }
-// });
+const cnt = ref(0); // 创建一个响应式变量来存储表格行数
 
 onBeforeMount(async () => {
   try {
     let res = await MyBorrowQuery({ id: userName });
-    console.log("API response:", res);  // 这将帮助你看到从 API 返回的实际响应
+    console.log("API response:", res);
 
-    // 检查 res 是否存在，res.myborrowresps 是否是数组
     if (res && Array.isArray(res.MyBorrowRespList)) {
-      tableData.value = [];  // 先清空数组
-      res.MyBorrowRespList.forEach(item => {
-        tableData.value.push({
-          id: userName,
-          databorrow: item.databorrow,
-          datereturn: item.datereturn,
-          expired: item.expired,
-          title: item.title,
-          author: item.author,
-          bid: item.bid,
-          category: item.category,
-          version: item.version,
-        });
-      });
+      // 更新表格数据和行数
+      tableData.value = res.MyBorrowRespList.map(item => ({
+        id: userName,
+        databorrow: item.databorrow,
+        datereturn: item.datereturn,
+        expired: item.expired,
+        title: item.title,
+        author: item.author,
+        bid: item.bid,
+        category: item.category,
+        version: item.version,
+      }));
+      cnt.value = tableData.value.length; // 设置响应式变量 cnt 的值为表格行数
     } else {
-      // 提供更具体的错误信息以帮助诊断问题
-      console.error("Response received but the 'myborrowresps' key is missing or invalid:", res);
+      console.error("Response received but the 'MyBorrowRespList' key is missing or invalid:", res);
     }
   } catch (error) {
     console.error('Error during data fetch:', error);
@@ -93,6 +60,7 @@ onBeforeMount(async () => {
     欢迎， {{ userName }}!
     </div>
     <div><h1>借阅记录</h1></div>
+    <div><h1>很厉害！总共借书{{cnt}}次</h1></div>
     
     <div class="train-container">
         <el-table

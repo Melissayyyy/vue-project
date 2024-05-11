@@ -58,6 +58,8 @@ const fetchData = async () => {
 </script>
 
 <template>
+<div class = "container">
+  <div class = "list">
   <el-row>
     <el-col :span="24">
       <el-table :data="tableData" stripe style="width: 100%">
@@ -68,7 +70,9 @@ const fetchData = async () => {
       </el-table>
     </el-col>
   </el-row>
+</div>
 
+<div class = "pages">
   <el-pagination
       @current-change="handleCurrentChange"
       :current-page="currentPage"
@@ -76,9 +80,18 @@ const fetchData = async () => {
       layout="prev, pager, next"
       :total="total"
   />
+</div>
+</div>
 
 </template>
 
 <style scoped>
+.container{
+    display: flex;    
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+    width: 100%;
 
+}
 </style>
