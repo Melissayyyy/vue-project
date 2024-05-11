@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import {reactive, ref} from 'vue'
 import type {FormInstance, FormRules} from 'element-plus'
 import {useRouter} from 'vue-router'
@@ -46,7 +46,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
     if (valid) {
       let res = await RegisterApi({
         studentno: registerForm.studentno,
-        username: registerForm.userName,
+//        username: registerForm.userName,
         password: registerForm.password,
         first_name: registerForm.first_name,
         last_name: registerForm.last_name,
@@ -144,4 +144,4 @@ button {
 button:hover {
   background-color: rgb(94, 128, 143);
 }
-</style>
+</style> -->

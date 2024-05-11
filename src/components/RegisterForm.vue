@@ -57,10 +57,10 @@ const submitForm = (formEl: FormInstance | undefined) => {
         ElMessage.success('注册成功')
         await router.push('/');
       } else {
-        ElMessage.error('注册失败，请重新输入')
+        ElMessage.error('注册失败请重新输入')
       }
     } else {
-      ElMessage.error('注册失败，请重新输入')
+      ElMessage.error('注册失败请重新输入')
       return false
     }
   })
@@ -82,12 +82,11 @@ function jumpToLogin() {
       class="demo-ruleForm"
   >
 
-    <el-form-item label="学号" prop="studentno">
+  <el-form-item label="学号" prop="studentno">
       <el-input v-model="registerForm.studentno" type="studentno" autocomplete="off"/>
     </el-form-item>
 
-
-    <el-form-item label="用户名" prop="userName" >
+    <el-form-item label="用户名" prop="userName">
       <el-input v-model="registerForm.userName" type="text" autocomplete="off"/>
     </el-form-item>
 
@@ -135,13 +134,13 @@ input[type="password"] {
   box-sizing: border-box; /* 定义尺寸计算方式 */
 }
 button {
-  background-color: #357e86 ;
-  color: rgb(255, 255, 255);
+  background-color: #3f3010;
+  color: red;
   border: blue;
   padding: 10px 20px;
   cursor: pointer;
 }
 button:hover {
-  background-color: rgb(94, 128, 143);
+  background-color: #36976b;
 }
 </style>

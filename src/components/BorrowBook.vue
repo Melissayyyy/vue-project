@@ -11,7 +11,7 @@ const handleClick = () => {
 import { ref, computed, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import {Search, RefreshRight} from '@element-plus/icons-vue'
-import {GetBookInfoByPageNum, DiscardBookById, BorrowABook} from "@/request/api";
+import {GetBookInfoByPageNum, BorrowABook} from "@/request/api";
 import {ElDialog, ElButton, ElMessage} from 'element-plus'
 
 interface Book {
@@ -132,19 +132,19 @@ function clearInput(){
 }
 
 interface BS_form{
-    bid: number
+    bid: string
+    id: string
     databorrow: string
     datareturn: string
 }
 
-let delres = ref<BS_form>();
-
 const Borrow = async (book: Book) => {
   try {
     const response = await BorrowABook({
-      bid: book.bid,
-      databorrow: new Date().toISOString().split('T')[0],  // Assumes date is needed in YYYY-MM-DD format
-      datareturn: new Date(new Date().setDate(new Date().getDate() + 30)).toISOString().split('T')[0],  // Example: set return date as 30 days from now
+      bid: book.bid.toString(),
+      id: userName,
+      databorrow: new Date().toISOString().slice(0, 10),
+      datareturn: new Date(new Date().setDate(new Date().getDate() + 14)).toISOString().slice(0, 10),
     });
     if (response.success) {
       ElMessage.success('Book successfully borrowed');
@@ -164,7 +164,7 @@ const Borrow = async (book: Book) => {
 <template>
   <div class="train-main">
     <div>
-    用户名: {{ userName }}
+    欢迎， {{ userName }}!
     </div>
     <div><h1>书库</h1></div>
     

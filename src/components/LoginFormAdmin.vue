@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 
 import {reactive, ref} from 'vue'
 import type {FormInstance, FormRules} from 'element-plus'
@@ -111,4 +111,4 @@ function jumpToRegister() {
 <style scoped>
 /* scoped 表示样式仅应用于当前组件 */
 </style>
-
+ -->

@@ -48,7 +48,13 @@ onBeforeMount(async () => {
       }
     // 根据 status 的值设置一个描述性的文本
     const bookStatusText = (item.status == 0 ? '在库' : '出借'); 
- 
+    // let bookStatusText = "";
+    //   if(item.status == 0) 
+    //     bookStatusText = "在库";
+    //   else if(item.status == 1)
+    //     bookStatusText="借出";
+    //   else if(item.status == 2)
+    //     bookStatusText = "已弃";   
     tableData.value.push({
       bid: item.bid,
       title: item.title,
@@ -84,8 +90,9 @@ const fetchData = async () => {
       return;
     }
     // 根据 status 的值设置一个描述性的文本
-    const bookStatusText = (item.status == 0 ? '在库' : '出借'); 
+    const bookStatusText = (item.status == 0 ? '在库' : '出借');    
 
+    // 将具有描述性状态文本的项目添加到 tableData
     tableData.value.push({
       bid: item.bid,
       title: item.title,
@@ -147,12 +154,14 @@ const EditInfo = (book: Book) => {
     <div class="train-container">
         <div class="inputbox">
             <el-input v-model="input" style="width: 240px" placeholder="模糊搜索：编号/书名/分类/作者/出版年份（不区分大小写）" :icon="Search"/> 
+            <!-- <el-button :icon="Search" class="inside-button" @click="search()"/>   -->
             <el-button :icon="RefreshRight" class="inside-button" @click="clearInput()"/>          
         </div>
         <el-table
               :data="filteredBooks"
               style="width: 100%"
-              class="form-container"              
+              class="form-container"
+              
           > 
         <el-table-column prop="bid" label="图书编号" width="150"/>
         <el-table-column prop="title" label="书名" width="250"/>

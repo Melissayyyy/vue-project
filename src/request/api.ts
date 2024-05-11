@@ -8,9 +8,9 @@ interface ReqLogin {
 }
 
 interface ReqRegister { //注册用户的表单
+    studentno: string
     username: string
     password: string
-    studentno: string
     first_name: string,
     last_name: string,
     email: string,
@@ -30,7 +30,8 @@ interface NewBookForm{ //新录入的书的表单信息
     time: number,
 }
 interface BS_form{
-    bid: number
+    bid: string
+    id: string
     databorrow: string
     datareturn: string
 }
@@ -55,17 +56,18 @@ interface ItypeAPI<T> {
     total_pages: number
     category_list: Category[];
     bs: BS;
+    myborrowresp: MyBorrowResp;
+    MyBorrowRespList: MyBorrowResp[];
 }
 
 interface User {
+    is_active: boolean,
     id: number,
     username: string,
     role: string,
     email: string,
     first_name: string,
-    last_name: string,
-    is_active: boolean,
-    studentno: string,
+    last_name: string
 }
 interface Book {
     bid: number
@@ -88,6 +90,18 @@ interface BS{
 
 interface Category{
     whatstring: string
+}
+
+interface MyBorrowResp{
+    id: string
+    databorrow: string
+    datereturn: string
+    expired: boolean
+    title: string
+    author: string
+    bid: string
+    category: string
+    version: number
 }
 
 //测试hello api
@@ -117,7 +131,7 @@ export const GetUserInfoByUserName = (params: { userName: string }): Res<null> =
 
 //根据pageNumber查询用户信息api  get
 export const GetUserInfoByPageNum = (params: { pageNumber: number }): Res<null> =>
-    instance.get(`/api/users/list/${params.pageNumber}`, {params});
+    instance.get(`/api/users/list/${params.pageNumber}`, {params}); //两个参数
 
 export const AddUser = (): Res<null> =>
     instance.post('/api/adduser');
@@ -134,6 +148,8 @@ export const DiscardBookById = (params: { bookid: number }): Res<null> =>
 export const BorrowABook = (data: BS_form): Res<null> =>
     instance.post('/api/borrowbook', data);
 
+export const MyBorrowQuery = (params: {id: string}): Res<MyBorrowResp> =>
+    instance.get(`/api/query/myborrow`,{params});
 
 // //以下是模板:
 // // post请求 ，没参数
