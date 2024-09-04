@@ -46,15 +46,8 @@ onBeforeMount(async () => {
         console.error("Item in 'books' array is missing 'bid' field", item);
         return;
       }
-    // 根据 status 的值设置一个描述性的文本
-    const bookStatusText = (item.status == 0 ? '在库' : '出借'); 
-    // let bookStatusText = "";
-    //   if(item.status == 0) 
-    //     bookStatusText = "在库";
-    //   else if(item.status == 1)
-    //     bookStatusText="借出";
-    //   else if(item.status == 2)
-    //     bookStatusText = "已弃";   
+    const bookStatusText = (item.status == 0 ? '在库' : '出借');  // 根据 status 的值设置一个描述性的文本
+    
     tableData.value.push({
       bid: item.bid,
       title: item.title,
